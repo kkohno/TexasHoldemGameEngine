@@ -1,5 +1,7 @@
 ﻿namespace TexasHoldem.Logic.Players
 {
+	using System.Threading.Tasks;
+
     public abstract class PlayerDecorator : IPlayer
     {
         protected PlayerDecorator(IPlayer player)
@@ -33,7 +35,7 @@
             return this.Player.PostingBlind(context);
         }
 
-        public virtual PlayerAction GetTurn(IGetTurnContext context)
+        public virtual Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
             return this.Player.GetTurn(context);
         }

@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.Logic.Players
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Logic.Players
 {
     using System.Collections.Generic;
 
@@ -33,7 +35,7 @@
 
         public abstract PlayerAction PostingBlind(IPostingBlindContext context);
 
-        public abstract PlayerAction GetTurn(IGetTurnContext context);
+        public abstract Task<PlayerAction> GetTurn(IGetTurnContext context);
 
         public virtual void EndRound(IEndRoundContext context)
         {

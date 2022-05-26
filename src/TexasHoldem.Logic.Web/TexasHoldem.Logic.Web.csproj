@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TexasHoldem.Logic.DTO\TexasHoldem.Logic.DTO.csproj" />
+    <ProjectReference Include="..\TexasHoldem.Logic\TexasHoldem.Logic.csproj" />
+  </ItemGroup>
+
+</Project>

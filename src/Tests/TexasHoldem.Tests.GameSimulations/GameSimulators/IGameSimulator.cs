@@ -1,7 +1,9 @@
 ﻿namespace TexasHoldem.Tests.GameSimulations.GameSimulators
 {
+	using System.Threading.Tasks;
+
     public interface IGameSimulator
     {
-        GameSimulationResult Simulate(int numberOfGames);
+	    Task<GameSimulationResult> Simulate(int numberOfGames);
     }
 }

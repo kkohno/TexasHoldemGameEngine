@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.UI.Console
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.UI.Console
 {
     using System;
     using System.Collections.Generic;
@@ -81,7 +83,7 @@
             return action;
         }
 
-        public override PlayerAction GetTurn(IGetTurnContext context)
+        public override async Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
             this.UpdateCommonRows(
                 context.CurrentPot,
@@ -90,7 +92,7 @@
 
             ConsoleHelper.WriteOnConsole(this.row + 1, 2, context.MoneyLeft + "   ");
 
-            var action = base.GetTurn(context);
+            var action = await base.GetTurn(context);
 
             if (action.Type == PlayerActionType.Fold)
             {

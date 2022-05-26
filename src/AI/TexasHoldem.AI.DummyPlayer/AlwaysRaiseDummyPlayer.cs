@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.AI.DummyPlayer
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.AI.DummyPlayer
 {
     using System;
 
@@ -15,9 +17,9 @@
             return context.BlindAction;
         }
 
-        public override PlayerAction GetTurn(IGetTurnContext context)
+        public override Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
-            return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
+            return Task.FromResult(PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall));
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿namespace TexasHoldem.Logic.GameMechanics
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Logic.GameMechanics
 {
     public interface IHandLogic
     {
-        void Play();
+        Task Play();
     }
 }

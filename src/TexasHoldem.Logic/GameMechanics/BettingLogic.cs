@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.Logic.GameMechanics
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Logic.GameMechanics
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -53,7 +55,7 @@
 
         public List<PlayerActionAndName> RoundBets { get; }
 
-        public void Bet(GameRoundType gameRoundType)
+        public async Task Bet(GameRoundType gameRoundType)
         {
             this.RoundBets.Clear();
             this.minRaise.Reset();
@@ -95,7 +97,7 @@
                 }
 
                 var maxMoneyPerPlayer = this.allPlayers.Max(x => x.PlayerMoney.CurrentRoundBet);
-                var action =
+                var action = await
                     player.GetTurn(
                         new GetTurnContext(
                             gameRoundType,

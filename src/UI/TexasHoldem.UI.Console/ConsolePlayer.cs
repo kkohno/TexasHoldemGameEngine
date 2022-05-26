@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.UI.Console
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.UI.Console
 {
     using System;
 
@@ -23,7 +25,7 @@
             return context.BlindAction;
         }
 
-        public override PlayerAction GetTurn(IGetTurnContext context)
+        public override async Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
             if (!context.CanRaise)
             {
@@ -71,6 +73,7 @@
                 {
                     return action;
                 }
+                await Task.Yield();
             }
         }
 

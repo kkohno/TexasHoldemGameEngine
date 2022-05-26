@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.Logic.GameMechanics
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Logic.GameMechanics
 {
     using System;
     using System.Collections.Generic;
@@ -82,7 +84,7 @@
 
         public int HandsPlayed { get; private set; }
 
-        public IPlayer Start()
+        public async Task<IPlayer> Start()
         {
             var playerNames = this.allPlayers.Select(x => x.Name).ToList().AsReadOnly();
             foreach (var player in this.allPlayers)
@@ -90,7 +92,7 @@
                 player.StartGame(new StartGameContext(playerNames, player.BuyIn == -1 ? this.initialMoney : player.BuyIn));
             }
 
-            this.PlayGame();
+            await this.PlayGame();
 
             var winner = this.allPlayers.WithMoney().FirstOrDefault();
             foreach (var player in this.allPlayers)
@@ -113,7 +115,7 @@
             }
         }
 
-        private void PlayGame()
+        private async Task PlayGame()
         {
             var shifted = this.allPlayers.ToList();
 
@@ -134,7 +136,7 @@
                 // Rotate players
                 IHandLogic hand = new HandLogic(shifted, this.HandsPlayed, smallBlind);
 
-                hand.Play();
+                await hand.Play();
 
                 this.Rebuy();
             }

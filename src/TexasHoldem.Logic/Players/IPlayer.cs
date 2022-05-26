@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.Logic.Players
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Logic.Players
 {
     public interface IPlayer
     {
@@ -14,7 +16,7 @@
 
         PlayerAction PostingBlind(IPostingBlindContext context);
 
-        PlayerAction GetTurn(IGetTurnContext context);
+        Task<PlayerAction> GetTurn(IGetTurnContext context);
 
         void EndRound(IEndRoundContext context);
 

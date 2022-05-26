@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.AI.SmartPlayer
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.AI.SmartPlayer
 {
     using System;
 
@@ -19,7 +21,7 @@
             return context.BlindAction;
         }
 
-        public override PlayerAction GetTurn(IGetTurnContext context)
+        public override Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
             if (context.RoundType == GameRoundType.PreFlop)
             {
@@ -28,11 +30,11 @@
                 {
                     if (context.CanCheck)
                     {
-                        return PlayerAction.CheckOrCall();
+                        return Task.FromResult(PlayerAction.CheckOrCall());
                     }
                     else
                     {
-                        return PlayerAction.Fold();
+                        return Task.FromResult(PlayerAction.Fold());
                     }
                 }
 
@@ -40,21 +42,21 @@
                 if (playHand == CardValuationType.Risky && isRaiseOptionAvailable)
                 {
                     var factor = RandomProvider.Next(1, 4);
-                    return this.RaiseOrAllIn(
-                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor);
+                    return Task.FromResult(this.RaiseOrAllIn(
+                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor));
                 }
 
                 if (playHand == CardValuationType.Recommended && isRaiseOptionAvailable)
                 {
                     var factor = RandomProvider.Next(3, 6);
-                    return this.RaiseOrAllIn(
-                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor);
+                    return Task.FromResult(this.RaiseOrAllIn(
+                        context.MinRaise, context.CurrentMaxBet, context.MoneyLeft, context.MoneyToCall, factor));
                 }
 
-                return PlayerAction.CheckOrCall();
+                return Task.FromResult(PlayerAction.CheckOrCall());
             }
 
-            return PlayerAction.CheckOrCall();
+            return Task.FromResult(PlayerAction.CheckOrCall());
         }
 
         private PlayerAction RaiseOrAllIn(int minRaise, int currentMaxBet, int moneyLeft, int moneyToCall, int factor)

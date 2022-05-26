@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.Tests.GameSimulations.GameSimulators
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.Tests.GameSimulations.GameSimulators
 {
     using System;
     using System.Diagnostics;
@@ -8,7 +10,7 @@
 
     public abstract class BaseGameSimulator : IGameSimulator
     {
-        public GameSimulationResult Simulate(int numberOfGames)
+        public async Task<GameSimulationResult> Simulate(int numberOfGames)
         {
             var firstPlayer = this.GetFirstPlayer();
             var secondPlayer = this.GetSecondPlayer();
@@ -32,7 +34,7 @@
                                             ? new TexasHoldemGame(firstPlayer, secondPlayer)
                                             : new TexasHoldemGame(secondPlayer, firstPlayer);
 
-                var winner = game.Start();
+                var winner = await game.Start();
 
                 lock (pointsLock)
                 {

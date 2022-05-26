@@ -1,4 +1,6 @@
-﻿namespace TexasHoldem.AI.DummyPlayer
+﻿using System.Threading.Tasks;
+
+namespace TexasHoldem.AI.DummyPlayer
 {
     using System;
 
@@ -16,13 +18,13 @@
             return context.BlindAction;
         }
 
-        public override PlayerAction GetTurn(IGetTurnContext context)
+        public override Task<PlayerAction> GetTurn(IGetTurnContext context)
         {
             var chanceForAction = RandomProvider.Next(1, 101);
             if (chanceForAction == 1 && context.MoneyLeft > 0)
             {
                 // All-in
-                return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
+                return Task.FromResult(PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall));
             }
 
             if (chanceForAction <= 15)
@@ -32,35 +34,35 @@
                     if (context.MinRaise + context.CurrentMaxBet > context.MoneyLeft)
                     {
                         // All-in
-                        return PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall);
+                        return Task.FromResult(PlayerAction.Raise(context.MoneyLeft - context.MoneyToCall));
                     }
                     else
                     {
                         // Minimum raise
-                        return PlayerAction.Raise(context.MinRaise);
+                        return Task.FromResult(PlayerAction.Raise(context.MinRaise));
                     }
                 }
                 else
                 {
-                    return PlayerAction.CheckOrCall();
+                    return Task.FromResult(PlayerAction.CheckOrCall());
                 }
             }
 
             // Play safe
             if (context.CanCheck)
             {
-                return PlayerAction.CheckOrCall();
+                return Task.FromResult(PlayerAction.CheckOrCall());
             }
 
             if (chanceForAction <= 60)
             {
                 // Call
-                return PlayerAction.CheckOrCall();
+                return Task.FromResult(PlayerAction.CheckOrCall());
             }
             else
             {
                 // Fold
-                return PlayerAction.Fold();
+                return Task.FromResult(PlayerAction.Fold());
             }
         }
     }
