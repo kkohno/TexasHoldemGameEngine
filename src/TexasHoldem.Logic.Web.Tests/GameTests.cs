@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TexasHoldem.Logic.Players;
 
 namespace TexasHoldem.Logic.Web.Tests
 {
@@ -16,7 +17,13 @@ namespace TexasHoldem.Logic.Web.Tests
 				new("3", 1000)
 			};
 			var game = new WebTexasHoldem(players, 100);
-			await game.Start();
+			game.Start();
+			foreach (var player in game.Players) {
+				if (player.IsMyTurn) {
+					player.MakeTurn(PlayerAction.CheckOrCall());
+					await Task.Yield();
+				}
+			}
 			//var winner = await Task.Run(game.Start);
 			//Console.WriteLine($"winner: {winner.Name}");
 		}
